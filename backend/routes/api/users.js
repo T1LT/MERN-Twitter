@@ -4,7 +4,8 @@ const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
 const User = mongoose.model("User");
 const passport = require("passport");
-const { loginUser } = require("../../config/passport");
+const { loginUser, restoreUser } = require("../../config/passport");
+const { isProduction } = require("../../config/keys");
 
 // TEST ROUTE
 router.get("/", (req, res, next) => {
@@ -65,6 +66,20 @@ router.post("/login", async (req, res, next) => {
     }
     return res.json(await loginUser(user));
   })(req, res, next);
+});
+
+// GET /api/users/current
+router.get("/current", restoreUser, (req, res) => {
+  if (!isProduction) {
+    const csrfToken = req.csrfToken();
+    res.cookie("CSRF-TOKEN", csrfToken);
+  }
+  if (!req.user) return res.json(null);
+  return res.json({
+    _id: req.user._id,
+    username: req.user.username,
+    email: req.user.email,
+  });
 });
 
 module.exports = router;
