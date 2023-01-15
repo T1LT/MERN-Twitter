@@ -16,7 +16,7 @@ const NavBar = () => {
   const getLinks = () => {
     if (loggedIn) {
       return (
-        <div className="links-nav">
+        <div className="links">
           <Link to={"/tweets"}>All Tweets</Link>
           <Link to={"/profile"}>Profile</Link>
           <Link to={"/tweets/new"}>Write a Tweet</Link>
@@ -25,7 +25,7 @@ const NavBar = () => {
       );
     } else {
       return (
-        <div className="links-auth">
+        <div className="links">
           <Link to={"/signup"}>Signup</Link>
           <Link to={"/login"}>Login</Link>
         </div>
@@ -34,10 +34,10 @@ const NavBar = () => {
   };
 
   return (
-    <>
+    <div className="navbar">
       <h1>Chirper</h1>
       {getLinks()}
-    </>
+    </div>
   );
 };
 
