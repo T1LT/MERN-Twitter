@@ -9,7 +9,7 @@ const { isProduction } = require("../../config/keys");
 const validateRegisterInput = require("../../validations/register");
 const validateLoginInput = require("../../validations/login");
 
-// TEST ROUTE
+// GET /api/users
 router.get("/", (req, res, next) => {
   res.json({
     message: "GET /api/users",
